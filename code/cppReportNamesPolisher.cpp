@@ -21,10 +21,10 @@ protected:
   vector<string> assigNames;
 
   string getPdfName(int i) {
-    if (i >= assigNames.size())
+    if (i - 1 >= assigNames.size())
       throw "Index " + to_string(i) + " is out of boundary!";
-    string expNum = i < 10 ? string("0") + to_string(i + 1) : to_string(i + 1);
-    string result = stuNo + "-" + stuName + "-C++程序设计-实验" + expNum + "-" + assigNames[i]  + ".pdf"; 
+    string expNum = i < 10 ? string("0") + to_string(i) : to_string(i);
+    string result = stuNo + "-" + stuName + "-C++程序设计-实验" + expNum + "-" + assigNames[i - 1]  + ".pdf"; 
     return result;
   }
 
@@ -54,7 +54,7 @@ public:
   virtual void proper_output(){
     cout<<endl;
     for (int i = 1; i <= assigNames.size(); i++){
-      string pdffile = getPdfName(i - 1);
+      string pdffile = getPdfName(i);
       cout<<pdffile<<endl;
     }
   }
@@ -73,7 +73,7 @@ public:
   }
   void proper_output(){
     for (int i = 1; i <= assigNames.size(); i++){
-      string pdffile = getPdfName(i - 1);
+      string pdffile = getPdfName(i);
       printer -> send(pdffile);
     }
   }
