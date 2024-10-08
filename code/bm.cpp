@@ -1,7 +1,5 @@
 /*
- * The basic Boyer-Moore pattern matching algorithm for instructional purpose.
- * The suffix table and the longest suffix matches are printed into the console,
- * to provide a better illustration of the suffix matches in each step.
+ * The basic KMP pattern matching algorithm for instructional purpose.
  * Author: Linghuei Guo. Hnu, Kaifeng, China
  * GPG   : 6819D81B0971C2C4
  * All rights reserved.
@@ -11,10 +9,10 @@
 #include <iomanip>
 using namespace std;
 
-namespace boyer_moore {
+namespace kmp {
 
   template<typename T>
-  int suffix_length(int k1, int k2, T* arr1, T* arr2, int patternLen, int* mapSufix) {
+  int prefix_index(int k1, int k2, T* arr1, T* arr2, int patternLen, int* mapSufix) {
     // assert: arr1[k1 - k2 + 1 .. k1 - 1] ~ arr2[0 .. k2 - 1] inclusively
     // @mapSufix: array of max lengths of  matched arr2 suffixes  aligned to each position of arr1.
     // returning: the index - max k' < k s.t. arr1[k1 - k' + 1 .. k1] ~ arr2[0 .. k'] inclusively.
@@ -22,7 +20,7 @@ namespace boyer_moore {
       return k2; // k' < k and may be negative.
     }
     else if (k2 == patternLen || arr1[k1] != arr2[k2]) {
-      return suffix_length(k1, mapSufix[k2], arr1, arr2, patternLen, mapSufix);
+      return prefix_index(k1, mapSufix[k2], arr1, arr2, patternLen, mapSufix);
     }
     else
       return k2;
@@ -31,7 +29,7 @@ namespace boyer_moore {
   template<typename T>
   int selfMatch(int k, T* arr, int arrLen, int *mapSufix) {
     int k2 = mapSufix[k - 1];
-    return suffix_length(k - 1, k2, arr, arr, arrLen, mapSufix);
+    return prefix_index(k - 1, k2, arr, arr, arrLen, mapSufix);
   }
 
   template<typename T>
@@ -60,7 +58,7 @@ namespace boyer_moore {
     int suffixTable[patternLen + 1];
     buildMatcher(arr2, patternLen, suffixTable);
     for (int i = 0, j = 0; i < textLen; ++i) {
-      j = suffix_length(i, j, arr1, arr2, patternLen, suffixTable);
+      j = prefix_index(i, j, arr1, arr2, patternLen, suffixTable);
       result[i] = j++;
     }
   }
@@ -97,6 +95,6 @@ namespace boyer_moore {
 }
 
 int main(int argnum, char **argarray) {
-  using namespace boyer_moore;
+  using namespace kmp;
   test();
 }
