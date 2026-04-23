@@ -2,7 +2,7 @@
  * Knight Tour Game on Chess board
  * Author: Linghuei Guo
  * Email: l.h.kuo@outlook.com
- * Date: Apr-22-2024
+ * Date: Apr-22-2026
  * All Rights Reserved
  ****************************************/
 #include <iostream>
