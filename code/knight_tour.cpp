@@ -81,7 +81,7 @@ public:
 	}
 
 	void display(std::ostream &c = cout) {
-		cout << format("\n--------------Board {0:^3d}x{0:^3d}--------------------\n", boardsize);
+		c << format("\n--------------Board {0:^3d}x{0:^3d}--------------------\n", boardsize);
 		for (int i = 0; i < boardsize; ++i)  {
 			for (int j = 0; j < boardsize; ++j) {
 				c << format(" | {:^5d}", board[i][j]);
